@@ -1,0 +1,27 @@
+---
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: jenkins-ds
+  labels:
+    type: ci-cd
+    author: prabhanjan
+spec:
+  selector:
+     matchLabels:
+       type: ci-cd
+  template:
+     metadata:
+       name: jenkins-pod
+       labels:
+         type: ci-cd
+     spec:
+       containers:
+         - name: myjenkins
+           image: jenkins/jenkins
+           ports:
+             - containerPort: 8080
+               hostPort: 9090
+...                 
+
+
