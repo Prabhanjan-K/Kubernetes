@@ -1,0 +1,46 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: postgres-deployment
+  labels:
+    type: db
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      type: db
+  template:
+    metadata:
+      name: postgres-Pod
+      labels:
+        type: db
+    spec:
+      containers:
+        - name: postgres
+          image: postgres
+          env:
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-secret
+                  key: a
+            - name: POSTGRES_USER
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-secret
+                  key: b
+            - name: POSTGRES_DB
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-secret
+                  key: c
+          resources:
+            requests:
+              memory: "65Mi"
+              cpu: "250m"
+            limits:
+              memory: "128Mi"
+              cpu: "500m"
+...                
+
