@@ -20,8 +20,18 @@ spec:
           - name: tomcat
             image: tomee
       tolerations:
-          - key: slave4
+          - key: slave1
             operator: Equal
-            value: worker4
+            value: worker1
             effect: NoSchedule
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+              - matchExpressions:
+                - key: slave1
+                  operator: In
+                  values:
+                    - worker1
+                      
 ...              

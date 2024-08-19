@@ -10,8 +10,8 @@ spec:
     - name: tomcat
       image: tomee
   tolerations:
-    - key: slave2
+    - key: slave1
       operator: Equal
-      value: worker2
+      value: worker1
       effect: NoSchedule
 ...        
