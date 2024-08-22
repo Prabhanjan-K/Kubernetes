@@ -1,0 +1,47 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mysql-deployment
+  labels:
+    type: db
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      type: db
+  template:
+    metadata:
+      name: mysql-pod
+      labels:
+        type: db
+    spec:
+      containers:
+        - name: mysql
+          image: mysql
+          env:
+            - name: MYSQL_ROOT_PASSWORD
+              value: '12345'
+          volumeMounts:
+            - name: myvolume
+              mountPath: /var/lib/mysql
+      volumes:
+        - name: myvolume
+          emptyDir:
+            {}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mysql-service
+  labels:
+    type: db
+spec:
+  type: ClusterIP
+  selector:
+    type: db
+  ports:
+    - targetPort: 3306
+      port: 3306
+...      
+
