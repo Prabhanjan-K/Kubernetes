@@ -1,0 +1,15 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: tomcat-server
+  labels:
+    type: webserver
+spec:
+  type: ClusterIP
+  ports:
+    - targetPort: 8080
+      port: 80
+  selector:
+    type: webserver
+...        
